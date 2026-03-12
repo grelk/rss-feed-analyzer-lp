@@ -42,31 +42,51 @@
             <div class="section-title reveal">
                 <h2>主な機能</h2>
             </div>
-            <div class="features-grid">
-                <div class="card reveal">
-                    <i class="fas fa-rss"></i>
-                    <h3>RSSフィードの定期収集</h3>
-                    <p>登録したRSSフィードをGASのタイマートリガーで巡回し、新着記事だけをGoogleスプレッドシートに蓄積します。大容量フィードは自動的に分割処理します。</p>
+            <div class="panel-grid">
+                <div class="panel-card reveal">
+                    <div class="panel-icon">
+                        <i class="fas fa-rss"></i>
+                    </div>
+                    <div class="panel-content">
+                        <h3>RSSフィードの定期収集</h3>
+                        <p>登録したRSSフィードをGASのタイマートリガーで巡回し、新着記事だけをGoogleスプレッドシートに蓄積します。大容量フィードは自動的に分割処理します。</p>
+                    </div>
                 </div>
-                <div class="card reveal">
-                    <i class="fas fa-file-lines"></i>
-                    <h3>Geminiによるレポート生成</h3>
-                    <p>蓄積した記事群をプロンプトに乗せてGemini APIに送り、要約・分析レポートを生成します。プロンプトは管理画面から自由に編集できます。</p>
+                <div class="panel-card reveal">
+                    <div class="panel-icon">
+                        <i class="fas fa-file-lines"></i>
+                    </div>
+                    <div class="panel-content">
+                        <h3>Geminiによるレポート生成</h3>
+                        <p>蓄積した記事群をプロンプトに乗せてGemini APIに送り、要約・分析レポートを生成します。プロンプトは管理画面から自由に編集できます。</p>
+                    </div>
                 </div>
-                <div class="card reveal">
-                    <i class="fas fa-tag"></i>
-                    <h3>自動タグ付け</h3>
-                    <p>蓄積した記事データからAIでタグの候補を抽出し、タグとして付与します。情報の分類を素早く行うことができます。</p>
+                <div class="panel-card reveal">
+                    <div class="panel-icon">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <div class="panel-content">
+                        <h3>自動タグ付け</h3>
+                        <p>蓄積した記事データからAIでタグの候補を抽出し、タグとして付与します。情報の分類を素早く行うことができます。</p>
+                    </div>
                 </div>
-                <div class="card reveal">
-                    <i class="fas fa-bell"></i>
-                    <h3>Webhook・メールへのスケジュール配信</h3>
-                    <p>日時とプロンプトを設定した配信ジョブを複数定義し、Teams・Slack・Discord・メールへ自動配信します。送信先は複数設定でき、ジョブごとに変えられます。</p>
+                <div class="panel-card reveal">
+                    <div class="panel-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="panel-content">
+                        <h3>Webhook・メールへのスケジュール配信</h3>
+                        <p>日時とプロンプトを設定した配信ジョブを複数定義し、Teams・Slack・Discord・メールへ自動配信します。送信先は複数設定でき、ジョブごとに変えられます。</p>
+                    </div>
                 </div>
-                <div class="card reveal">
-                    <i class="fas fa-chart-bar"></i>
-                    <h3>収集データの可視化・分析</h3>
-                    <p>蓄積した記事から抽出したタグをワードクラウドやランキングで表示する分析タブを内蔵しています。タグのグループごとに、タグの出現頻度を指定期間で集計できます。</p>
+                <div class="panel-card reveal">
+                    <div class="panel-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="panel-content">
+                        <h3>収集データの可視化・分析</h3>
+                        <p>蓄積した記事から抽出したタグをワードクラウドやランキングで表示する分析タブを内蔵しています。タグのグループごとに、タグの出現頻度を指定期間で集計できます。</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -79,26 +99,54 @@
                 <h2>効率的な情報収集で、意思決定を加速させる</h2>
                 <p>日々の巡回ワークフローを自動化し、重要なニュースのチェックに集中できる環境を整えます。</p>
             </div>
-            <div class="features-grid">
-                <div class="card reveal">
-                    <i class="fas fa-mug-hot"></i>
-                    <h3>朝のチェックを<br>「確認」だけにする</h3>
-                    <p><strong>Before:</strong> 始業後、大量のサイトを一つずつ巡回して新着がないか確認する。<br><br><strong>After:</strong> あなたが活動を始める前に、Geminiが全サイトをスキャン。今日チェックすべき数本の要約が、すでに手元に届いています。</p>
+            <div class="panel-grid">
+                <div class="panel-card reveal">
+                    <div class="panel-icon">
+                        <i class="fas fa-mug-hot"></i>
+                    </div>
+                    <div class="panel-content">
+                        <h3>朝のチェックを「確認」だけにする</h3>
+                        <div class="panel-comparison">
+                            <div class="before"><strong>Before:</strong> 始業後、大量のサイトを一つずつ巡回して新着がないか確認する。</div>
+                            <div class="after"><strong>After:</strong> あなたが活動を始める前に、Geminiが全サイトをスキャン。今日チェックすべき数本の要約が、すでに手元に届いています。</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card reveal">
-                    <i class="fas fa-bolt"></i>
-                    <h3>膨大な記事から<br>要点を数行で把握する</h3>
-                    <p><strong>Before:</strong> 海外ニュースや長文の記事を、時間をかけて読み解く必要がある。<br><br><strong>After:</strong> どんな長文もGeminiが要点を簡潔にまとめます。詳細を読むべきか、スキップすべきか、一目で判断できるようになります。</p>
+                <div class="panel-card reveal">
+                    <div class="panel-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="panel-content">
+                        <h3>膨大な記事から要点を数行で把握する</h3>
+                        <div class="panel-comparison">
+                            <div class="before"><strong>Before:</strong> 海外ニュースや長文の記事を、時間をかけて読み解く必要がある。</div>
+                            <div class="after"><strong>After:</strong> どんな長文もGeminiが要点を簡潔にまとめます。詳細を読むべきか、スキップすべきか、一目で判断できるようになります。</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card reveal">
-                    <i class="fas fa-shield-halved"></i>
-                    <h3>「見落とし」の不安から<br>解放される</h3>
-                    <p><strong>Before:</strong> 複数のソースに散らばった情報を追いきれず、重要な更新を見逃す懸念がある。<br><br><strong>After:</strong> 24時間体制でAIが巡回。特定のキーワードやトピックに関連する重要な変化だけを、確実に見つけ出します。</p>
+                <div class="panel-card reveal">
+                    <div class="panel-icon">
+                        <i class="fas fa-shield-halved"></i>
+                    </div>
+                    <div class="panel-content">
+                        <h3>「見落とし」の不安から解放される</h3>
+                        <div class="panel-comparison">
+                            <div class="before"><strong>Before:</strong> 複数のソースに散らばった情報を追いきれず、重要な更新を見逃す懸念がある。</div>
+                            <div class="after"><strong>After:</strong> 24時間体制でAIが巡回。特定のキーワードやトピックに関連する重要な変化だけを、確実に見つけ出します。</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card reveal">
-                    <i class="fas fa-share-nodes"></i>
-                    <h3>チームへの共有を<br>よりスムーズに、有益に</h3>
-                    <p><strong>Before:</strong> URLだけをシェアしても、意図が伝わらずに流されてしまう。<br><br><strong>After:</strong> AIが生成した要約や「なぜ重要か」という解説を添えて共有。コンテキストを含めた情報共有で、チームの反応が早まります。</p>
+                <div class="panel-card reveal">
+                    <div class="panel-icon">
+                        <i class="fas fa-share-nodes"></i>
+                    </div>
+                    <div class="panel-content">
+                        <h3>チームへの共有をよりスムーズに、有益に</h3>
+                        <div class="panel-comparison">
+                            <div class="before"><strong>Before:</strong> URLだけをシェアしても、意図が伝わらずに流されてしまう。</div>
+                            <div class="after"><strong>After:</strong> AIが生成した要約や「なぜ重要か」という解説を添えて共有。コンテキストを含めた情報共有で、チームの反応が早まります。</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
