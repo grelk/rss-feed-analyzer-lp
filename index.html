@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSS Feed Analyzer - RSSを自動収集してAIでレポートするGASアプリ</title>
+    <meta name="description" content="登録したRSSフィードを定期収集し、Gemini APIで分析・要約してTeamsやSlackへ自動送信。Google Apps Scriptだけで動く完全無料のOSSツール。">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header id="header">
+        <div class="container">
+            <nav>
+                <div class="logo">RSS Feed Analyzer</div>
+                <div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container hero-content">
+            <div class="badge">Google Apps Script + Gemini API / Coming Soon</div>
+            <h1>大量のRSS記事から<br>読むべき記事をAIで選別、毎朝レポートでお届け</h1>
+            <p>AI搭載型RSSフィードアナライザー。Gemini APIがあなたの代わりに情報を分析。<br>重要なニュースだけを抽出し、TeamsやSlackへスケジュール配信します。</p>
+            <div class="hero-btns">
+                <a href="#features" class="btn btn-primary">詳しく見る</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="section">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>主な機能</h2>
+            </div>
+            <div class="features-grid">
+                <div class="card reveal">
+                    <i class="fas fa-rss"></i>
+                    <h3>RSSフィードの定期収集</h3>
+                    <p>登録したRSSフィードをGASのタイマートリガーで巡回し、新着記事だけをGoogleスプレッドシートに蓄積します。大容量フィードは自動的に分割処理します。</p>
+                </div>
+                <div class="card reveal">
+                    <i class="fas fa-file-lines"></i>
+                    <h3>Geminiによるレポート生成</h3>
+                    <p>蓄積した記事群をプロンプトに乗せてGemini APIに送り、要約・分析レポートを生成します。プロンプトは管理画面から自由に編集できます。</p>
+                </div>
+                <div class="card reveal">
+                    <i class="fas fa-tag"></i>
+                    <h3>自動タグ付け</h3>
+                    <p>蓄積した記事データからAIでタグの候補を抽出し、タグとして付与します。情報の分類を素早く行うことができます。</p>
+                </div>
+                <div class="card reveal">
+                    <i class="fas fa-bell"></i>
+                    <h3>Webhook・メールへのスケジュール配信</h3>
+                    <p>日時とプロンプトを設定した配信ジョブを複数定義し、Teams・Slack・Discord・メールへ自動配信します。送信先は複数設定でき、ジョブごとに変えられます。</p>
+                </div>
+                <div class="card reveal">
+                    <i class="fas fa-chart-bar"></i>
+                    <h3>収集データの可視化・分析</h3>
+                    <p>蓄積した記事から抽出したタグをワードクラウドやランキングで表示する分析タブを内蔵しています。タグのグループごとに、タグの出現頻度を指定期間で集計できます。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="benefits" class="section" style="background: rgba(99, 102, 241, 0.05);">
+        <div class="container">
+            <div class="section-title reveal">
+                <div class="badge">Benefits</div>
+                <h2>効率的な情報収集で、意思決定を加速させる</h2>
+                <p>日々の巡回ワークフローを自動化し、重要なニュースのチェックに集中できる環境を整えます。</p>
+            </div>
+            <div class="features-grid">
+                <div class="card reveal">
+                    <i class="fas fa-mug-hot"></i>
+                    <h3>朝のチェックを<br>「確認」だけにする</h3>
+                    <p><strong>Before:</strong> 始業後、大量のサイトを一つずつ巡回して新着がないか確認する。<br><br><strong>After:</strong> あなたが活動を始める前に、Geminiが全サイトをスキャン。今日チェックすべき数本の要約が、すでに手元に届いています。</p>
+                </div>
+                <div class="card reveal">
+                    <i class="fas fa-bolt"></i>
+                    <h3>膨大な記事から<br>要点を数行で把握する</h3>
+                    <p><strong>Before:</strong> 海外ニュースや長文の記事を、時間をかけて読み解く必要がある。<br><br><strong>After:</strong> どんな長文もGeminiが要点を簡潔にまとめます。詳細を読むべきか、スキップすべきか、一目で判断できるようになります。</p>
+                </div>
+                <div class="card reveal">
+                    <i class="fas fa-shield-halved"></i>
+                    <h3>「見落とし」の不安から<br>解放される</h3>
+                    <p><strong>Before:</strong> 複数のソースに散らばった情報を追いきれず、重要な更新を見逃す懸念がある。<br><br><strong>After:</strong> 24時間体制でAIが巡回。特定のキーワードやトピックに関連する重要な変化だけを、確実に見つけ出します。</p>
+                </div>
+                <div class="card reveal">
+                    <i class="fas fa-share-nodes"></i>
+                    <h3>チームへの共有を<br>よりスムーズに、有益に</h3>
+                    <p><strong>Before:</strong> URLだけをシェアしても、意図が伝わらずに流されてしまう。<br><br><strong>After:</strong> AIが生成した要約や「なぜ重要か」という解説を添えて共有。コンテキストを含めた情報共有で、チームの反応が早まります。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="use-cases" class="section">
+        <div class="container">
+            <div class="section-title reveal">
+                <div class="badge">Practical Use Cases</div>
+                <h2>シーン別・活用ポテンシャル</h2>
+                <p>専門領域に合わせて、AIが最適なインテリジェンスを提供します。</p>
+            </div>
+            <div class="use-cases-grid reveal">
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <i class="fas fa-user-shield"></i>
+                        <h3>Security & IT</h3>
+                    </div>
+                    <p>公的機関やベンダーが発信する緊急速報から、自社に関連する脆弱性をAIが自動選別。「全件チェック」の疲弊から解放されます。</p>
+                </div>
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <i class="fas fa-truck-ramp-box"></i>
+                        <h3>Supply Chain</h3>
+                    </div>
+                    <p>ニュースの端々に隠れた「原材料高騰」や「物流遅延」のリスクをAIが検知。現場へのアラートを最速化します。</p>
+                </div>
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <i class="fas fa-landmark"></i>
+                        <h3>Market & Finance</h3>
+                    </div>
+                    <p>世界中の金融ニュースや公示文から、市場の温度感をAIがスコアリング。読解時間を圧縮し、朝礼の質を向上させます。</p>
+                </div>
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <i class="fas fa-microscope"></i>
+                        <h3>Research</h3>
+                    </div>
+                    <p>膨大な抄録から、テーマに「最も近い1本」をレコメンド。調査時間を大幅に短縮し、本来の解析業務に集中できます。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background: rgba(17, 24, 39, 0.3);">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>ブラウザから操作できる管理画面</h2>
+                <p>フィードの追加・削除、通知先の設定、レポートのプレビューや手動実行など、すべてWeb UIから行えます。</p>
+            </div>
+            <div class="reveal">
+                <div class="screenshot-grid">
+                    <div class="screenshot-item">
+                        <img src="assets/01_top-dashboard.jpg" alt="管理ダッシュボード" class="preview-img">
+                        <p>管理ダッシュボード</p>
+                    </div>
+                    <div class="screenshot-item">
+                        <img src="assets/04_report-management.jpg" alt="AIレポート作成・管理画面" class="preview-img">
+                        <p>AIレポート作成・管理画面</p>
+                    </div>
+                    <div class="screenshot-item">
+                        <img src="assets/03_analysis-dashboard.jpg" alt="記事分析ビュー" class="preview-img">
+                        <p>記事分析ビュー</p>
+                    </div>
+                    <div class="screenshot-item">
+                        <img src="assets/02_ai-report-management.jpg" alt="AIレポート配信設定" class="preview-img">
+                        <p>AIレポート配信設定</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="architecture">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>システム構成</h2>
+                <p>Google Apps Scriptで動作します。専用サーバーは不要です。</p>
+            </div>
+            <div class="reveal" style="overflow-x: auto;">
+                <svg viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:900px; display:block; margin:0 auto; font-family:'Inter',sans-serif;">
+                    <defs>
+                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+                        </linearGradient>
+                        <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                            <path d="M0,0 L0,6 L8,3 z" fill="#4b5563"/>
+                        </marker>
+                        <marker id="arrow-dash" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                            <path d="M0,0 L0,6 L8,3 z" fill="#374151"/>
+                        </marker>
+                    </defs>
+
+                    <!-- Input: RSS/Atom Sources (4 separate boxes) -->
+                    <rect x="10" y="50"  width="100" height="28" rx="6" fill="rgba(99,102,241,0.12)" stroke="#6366f1" stroke-width="1.2"/>
+                    <text x="60" y="69" text-anchor="middle" fill="#a5b4fc" font-size="10" font-weight="600">RSS 0.9x</text>
+
+                    <rect x="10" y="92"  width="100" height="28" rx="6" fill="rgba(99,102,241,0.12)" stroke="#6366f1" stroke-width="1.2"/>
+                    <text x="60" y="111" text-anchor="middle" fill="#a5b4fc" font-size="10" font-weight="600">RSS 1.0</text>
+
+                    <rect x="10" y="134" width="100" height="28" rx="6" fill="rgba(99,102,241,0.12)" stroke="#6366f1" stroke-width="1.2"/>
+                    <text x="60" y="153" text-anchor="middle" fill="#a5b4fc" font-size="10" font-weight="600">RSS 2.0</text>
+
+                    <rect x="10" y="176" width="100" height="28" rx="6" fill="rgba(99,102,241,0.12)" stroke="#6366f1" stroke-width="1.2"/>
+                    <text x="60" y="195" text-anchor="middle" fill="#a5b4fc" font-size="10" font-weight="600">Atom</text>
+
+                    <!-- Arrows: each source → GAS Batch -->
+                    <line x1="110" y1="64"  x2="210" y2="148" stroke="#4b5563" stroke-width="1.2" marker-end="url(#arrow)"/>
+                    <line x1="110" y1="106" x2="210" y2="158" stroke="#4b5563" stroke-width="1.2" marker-end="url(#arrow)"/>
+                    <line x1="110" y1="148" x2="210" y2="168" stroke="#4b5563" stroke-width="1.2" marker-end="url(#arrow)"/>
+                    <line x1="110" y1="190" x2="210" y2="178" stroke="#4b5563" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+                    <!-- GAS Batch -->
+                    <rect x="210" y="120" width="140" height="90" rx="10" fill="url(#grad1)" opacity="0.9"/>
+                    <text x="280" y="155" text-anchor="middle" fill="white" font-size="12" font-weight="700">GAS</text>
+                    <text x="280" y="173" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="10">Batch Trigger</text>
+                    <text x="280" y="189" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9">（定期実行）</text>
+
+
+                    <!-- Arrow GAS → Spreadsheet -->
+                    <line x1="350" y1="165" x2="410" y2="165" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arrow)"/>
+                    <text x="380" y="158" text-anchor="middle" fill="#6b7280" font-size="9">新着記事のみ</text>
+
+                    <!-- Google Spreadsheet -->
+                    <rect x="410" y="115" width="130" height="100" rx="10" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="1.5"/>
+                    <text x="475" y="152" text-anchor="middle" fill="#6ee7b7" font-size="11" font-weight="700">Google</text>
+                    <text x="475" y="168" text-anchor="middle" fill="#6ee7b7" font-size="11" font-weight="700">Spreadsheet</text>
+                    <text x="475" y="186" text-anchor="middle" fill="#9ca3af" font-size="9">記事バッファ</text>
+                    <text x="475" y="200" text-anchor="middle" fill="#9ca3af" font-size="9">ログの永続化</text>
+
+                    <!-- Arrow Spreadsheet → Gemini -->
+                    <line x1="540" y1="165" x2="600" y2="165" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arrow)"/>
+                    <text x="570" y="158" text-anchor="middle" fill="#6b7280" font-size="9">プロンプト送信</text>
+
+                    <!-- Gemini API -->
+                    <rect x="600" y="115" width="130" height="100" rx="10" fill="rgba(234,179,8,0.15)" stroke="#ca8a04" stroke-width="1.5"/>
+                    <text x="665" y="155" text-anchor="middle" fill="#fde047" font-size="11" font-weight="700">Gemini API</text>
+                    <text x="665" y="173" text-anchor="middle" fill="#9ca3af" font-size="9">要約・分析</text>
+                    <text x="665" y="189" text-anchor="middle" fill="#9ca3af" font-size="9">CVE / タグ抽出</text>
+
+
+                    <!-- Arrows Gemini → Destinations -->
+                    <line x1="730" y1="145" x2="792" y2="120" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arrow)"/>
+                    <line x1="730" y1="165" x2="792" y2="165" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arrow)"/>
+                    <line x1="730" y1="185" x2="792" y2="210" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+                    <!-- Destinations -->
+                    <rect x="792" y="105" width="95" height="30" rx="6" fill="rgba(99,102,241,0.15)" stroke="#6366f1" stroke-width="1"/>
+                    <text x="839" y="125" text-anchor="middle" fill="#a5b4fc" font-size="10" font-weight="600">Teams / Slack</text>
+
+                    <rect x="792" y="152" width="95" height="30" rx="6" fill="rgba(99,102,241,0.15)" stroke="#6366f1" stroke-width="1"/>
+                    <text x="839" y="172" text-anchor="middle" fill="#a5b4fc" font-size="10" font-weight="600">Discord</text>
+
+                    <rect x="792" y="199" width="95" height="30" rx="6" fill="rgba(99,102,241,0.15)" stroke="#6366f1" stroke-width="1"/>
+                    <text x="839" y="219" text-anchor="middle" fill="#a5b4fc" font-size="10" font-weight="600">Email</text>
+
+                    <!-- Script Properties -->
+                    <rect x="210" y="250" width="140" height="50" rx="6" fill="rgba(17,24,39,0.7)" stroke="#374151" stroke-width="1" stroke-dasharray="4,3"/>
+                    <text x="280" y="270" text-anchor="middle" fill="#6b7280" font-size="9">Script Properties</text>
+                    <text x="280" y="285" text-anchor="middle" fill="#6b7280" font-size="9">フィード一覧 / 設定</text>
+                    <line x1="280" y1="250" x2="280" y2="210" stroke="#374151" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrow-dash)"/>
+
+                    <!-- Web UI -->
+                    <rect x="410" y="250" width="130" height="50" rx="6" fill="rgba(17,24,39,0.7)" stroke="#374151" stroke-width="1" stroke-dasharray="4,3"/>
+                    <text x="475" y="270" text-anchor="middle" fill="#6b7280" font-size="9">Web UI (index.html)</text>
+                    <text x="475" y="285" text-anchor="middle" fill="#6b7280" font-size="9">管理 / 設定 / プレビュー</text>
+                    <line x1="390" y1="275" x2="350" y2="275" stroke="#374151" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrow-dash)"/>
+
+                    <!-- OPML -->
+                    <rect x="450" y="325" width="50" height="22" rx="5" fill="transparent" stroke="#4b5563" stroke-width="1"/>
+                    <text x="475" y="341" text-anchor="middle" fill="#6b7280" font-size="9">OPML</text>
+                    <line x1="475" y1="325" x2="475" y2="300" stroke="#374151" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrow-dash)"/>
+                    <text x="500" y="320" text-anchor="start" fill="#6b7280" font-size="8">インポート</text>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>動作の流れ</h2>
+            </div>
+            <div class="steps-list">
+                <div class="step-item reveal">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>フィード収集</h3>
+                        <p>GASのタイマートリガーが定期的に実行され、登録済みRSSフィードを巡回します。未取得の記事のみをスプレッドシートに書き込みます。</p>
+                    </div>
+                </div>
+                <div class="step-item reveal">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>レポート生成</h3>
+                        <p>設定した時刻になると、対象期間内の記事をGemini APIに送信します。返ってきた分析テキストをそのままレポートとして使用します。</p>
+                    </div>
+                </div>
+                <div class="step-item reveal">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>通知配信</h3>
+                        <p>生成したレポートを、設定した送信先（Teams / Slack / Discord / メール）に送ります。送信先とスケジュールは複数定義できます。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section hero" style="min-height: 60vh;">
+        <div class="container">
+            <div class="reveal">
+                <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">近日公開予定（AGPLv3）</h2>
+    
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.875rem;">&copy; 2026 RSS Feed Analyzer Project. Released under <a href="https://github.com/grelk/rss-analyzer/blob/main/LICENSE" style="color: inherit;">AGPLv3</a>.</p>
+        </div>
+    </footer>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modalImg">
+    </div>
+
+
+    <script>
+        // Scroll Header Effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Reveal Animation
+        const reveal = () => {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const revealTop = el.getBoundingClientRect().top;
+                const revealPoint = 150;
+                if (revealTop < windowHeight - revealPoint) {
+                    el.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', reveal);
+        reveal(); // Initial check
+
+        // Image Modal Logic
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+        const closeModal = document.querySelector('.modal-close');
+        
+        document.querySelectorAll('.preview-img').forEach(img => {
+            img.addEventListener('click', () => {
+                modal.style.display = 'block';
+                modalImg.src = img.src;
+                document.body.style.overflow = 'hidden'; // Prevent scroll
+            });
+        });
+
+        const closeEffect = () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+
+        closeModal.addEventListener('click', closeEffect);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeEffect();
+        });
+
+        // Close on Esc key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'block') closeEffect();
+        });
+    </script>
+</body>
+</html>
